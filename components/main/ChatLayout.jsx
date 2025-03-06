@@ -18,6 +18,7 @@ export default function ChatLayout() {
     setError("");
 
     try {
+      // const response = await fetch("http://localhost:3000/api/chat", {
       const response = await fetch(
         "https://echo-gpt-sooty.vercel.app/api/chat",
         {
