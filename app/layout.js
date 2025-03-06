@@ -28,9 +28,7 @@ export default function RootLayout({ children }) {
             </section>
 
             {/* Right Sidebar / Extra Content - Can Be Used for Widgets or Ads */}
-            {/* <section className="hidden md:block">
-              Extra Content
-            </section> */}
+            <section className="hidden md:block"></section>
           </section>
         </div>
       </body>
