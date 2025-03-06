@@ -3,18 +3,22 @@ export const POST = async (request) => {
     const { message } = await request.json();
 
     const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.OPEN_AI_API_KEY}`,
       {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${process.env.OPEN_AI_API_KEY}`,
-          "HTTP-Referer": "https://www.webstylepress.com/",
-          "X-Title": "webstylepress",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "deepseek/deepseek-r1:free",
-          messages: [{ role: "user", content: message }],
+          contents: [
+            {
+              parts: [
+                {
+                  text: message, // Use the 'message' from the request body
+                },
+              ],
+            },
+          ],
         }),
       }
     );
@@ -25,10 +29,14 @@ export const POST = async (request) => {
 
     const data = await response.json();
 
+    // Extract the content from the response
+    const responseText =
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "No response available";
+
     return new Response(
       JSON.stringify({
-        response:
-          data.choices?.[0]?.message?.content || "No response available",
+        response: responseText,
       }),
       {
         status: 200,
